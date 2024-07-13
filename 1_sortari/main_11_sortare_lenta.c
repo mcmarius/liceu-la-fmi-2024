@@ -1,0 +1,92 @@
+#include <stdio.h>  // printf
+#include <stdlib.h> // rand, srand, malloc, free
+#include <time.h>   // time, clock, CLOCKS_PER_SEC
+#include <assert.h> // pentru assert
+
+#define NMAX_AFIS 100
+
+void afis(int *v, int n) {
+    for(int i = 0; i < n; i++)
+        if(i < NMAX_AFIS)
+            printf("%d ", v[i]);
+    if(n > NMAX_AFIS)
+        printf("...");
+    printf("\n----------\n");
+}
+
+void genereaza_valori_aleatoare(int *v, int n, int val_min, int val_max) {
+    double t1, t2;
+    t1 = clock();
+    for(int i = 0; i < n; i++)
+        v[i] = rand() % (val_max - val_min + 1) + val_min;
+    t2 = clock();
+    printf("Timp generare %d numere: %lf secunde\n", n, 1.0*(t2 - t1) / CLOCKS_PER_SEC);
+}
+
+void sorteaza_lent(int *v, int n) {
+    double t1, t2;
+    t1 = clock();
+    for(int i = 0; i < n; i++)
+        for(int j = i + 1; j < n; j++)
+            if(v[i] > v[j]) {
+                int aux = v[i];
+                v[i] = v[j];
+                v[j] = aux;
+            }
+    t2 = clock();
+    printf("Timp sortare lenta %d numere: %lf secunde\n", n, 1.0*(t2 - t1) / CLOCKS_PER_SEC);
+}
+
+void rezolva_problema(int n, int val_min, int val_max) {
+    int *v = malloc(sizeof(*v) * n);
+    genereaza_valori_aleatoare(v, n, val_min, val_max);
+    sorteaza_lent(v, n);
+    afis(v, n);
+    free(v);
+}
+
+int main() {
+    srand(time(NULL));
+    int v1[] = {18, 7, 2024, 10, 12};
+    int n1 = sizeof(v1) / sizeof(v1[0]);
+    printf("----------\n");
+    afis(v1, n1);
+    //
+    int v2[] = {24, 7, 2024, 14, 16};
+    int n2 = sizeof(v2) / sizeof(v2[0]);
+    afis(v2, n2);
+    //
+    int n3 = 1000;
+    rezolva_problema(n3, 12, 34567);
+    //
+    int n4 = 10000;
+    rezolva_problema(n4, 12, 34567);
+    //
+    int n5 = 20000;
+    rezolva_problema(n5, 12, 34567);
+    //
+    int n6 = 30000;
+    rezolva_problema(n6, 12, 34567);
+    //
+    int n7 = 40000;
+    rezolva_problema(n7, 12, 34567);
+    //
+    int n8 = 50000;
+    rezolva_problema(n8, 12, 34567);
+    //
+    // sorteaza_lent(v2, n2);
+    // exemplu assert specific
+    /*
+    assert(v2[0] == 7);
+    assert(v2[1] == 14);
+    assert(v2[2] == 16);
+    assert(v2[3] == 24);
+    assert(v2[4] == 2024);
+    */
+    //
+    // exemplu assert pe caz general
+    // for(int i = 1; i < n2; i++)
+    //     assert(v2[i - 1] <= v2[i]);
+    return 0;
+}
+
