@@ -10,7 +10,7 @@ Etape:
 - cronometrarea timpului de execuție
 - alocare dinamică
 - sortare prin interschimbare în $O(n^2)$
-- sortare rapidă cu funcția predefinită `qsort` în $O(n*log(n))$
+- sortare rapidă cu funcția predefinită `qsort` în $O(n*log(n))$ <sup>(de fapt, căutarea rapidă are tot complexitate pătratică în cazul cel mai nefavorabil, însă în practică se folosește pivot randomizat și este foarte puțin probabil să nimerim pe un astfel de caz)</sup>
 
 După ce avem cele două implementări cu timpii de execuție, desenăm datele pe un grafic.
 
